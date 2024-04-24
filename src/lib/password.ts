@@ -1,9 +1,16 @@
-import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 
-export const validatePassword = (
+export const validatePassword = async (password: string, hash: string) => {
+  const isValid = await bcrypt.compare(password, hash);
+
+  return isValid;
+};
+
+export const genHashedPassword = (
   password: string,
-  hash: string,
-  salt: string
-): boolean => {
-  return true;
+  saltRounds: number = 10
+) => {
+  const hashedPassword = bcrypt.hash(password, saltRounds);
+
+  return hashedPassword;
 };
